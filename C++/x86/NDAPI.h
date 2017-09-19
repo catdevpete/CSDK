@@ -475,7 +475,7 @@ namespace NDAPISpace
 		/// </summary>
 		/// <param name="ids">A pointer to an array of int where the identifiers will be stored.</param>
 		/// <param name="numIds">Number of devices.</param>
-		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
+		/// <returns>Number of devices if succeeded, otherwise an Error enum.</returns>
 		int getDevicesId(int * ids, int numIds);
 		/// <summary>
 		/// Gets all the device identifiers from a specific filter.
@@ -483,7 +483,7 @@ namespace NDAPISpace
 		/// <param name="filter">A Location enum.</param>
 		/// <param name="ids">A pointer to an array of int where the identifiers will be stored.</param>
 		/// <param name="numIds">The number of devices from a specific filter.</param>
-		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
+		/// <returns>>Number of devices from a specific filter if succeeded, otherwise an Error enum.</returns>
 		int getDevicesId(Location filter, int * ids, int numIds);
 		
 		/// <summary>
@@ -667,6 +667,14 @@ namespace NDAPISpace
 		/// <param name="deviceId">The device identifier.</param>
 		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
 		int getMACAddress(std::string &mac, int deviceId);
+		/// <summary>
+		/// Gets the friendly name from a specific paired device
+		/// </summary>
+		/// <param name="mac">Where the name will be stored.</param>
+		/// <param name="deviceId">The device identifier</param>
+		/// <returns>0 if succeeded, otherwise an Error enum</returns>		
+		int getPairedName(std::string &name, int deviceId);
+
 	private:
 		
 		NDAPI_Private *priv;
@@ -743,6 +751,8 @@ extern "C" {
 	NDAPI_API int nd_getNumberOfFlex(INT_PTR pointer, int deviceId);
 	NDAPI_API int nd_getFlexState(INT_PTR pointer, float *values, int nValues, int deviceId);
 	NDAPI_API int nd_getMACAddress(INT_PTR pointer, char * mac, int &bufferSize, int deviceId);
+
+	NDAPI_API int nd_getPairedName(INT_PTR pointer, char * name, int &bufferSize, int deviceId);
 }
 
 #endif  // __NDAPI_H__ 
