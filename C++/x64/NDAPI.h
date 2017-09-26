@@ -674,6 +674,12 @@ namespace NDAPISpace
 		/// <param name="deviceId">The device identifier</param>
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>		
 		int getPairedName(std::string &name, int deviceId);
+		/// <summary>
+		/// Calibrate flex sensors. Once it is called, with the glove put on, open and close your hand twice in order to reset flex values
+		/// </summary>		
+		/// <param name="deviceId">The device identifier</param>
+		/// <returns>0 if succeeded, otherwise an Error enum</returns>	
+		int calibrateFlexSensors(int deviceID);
 
 	private:
 		
@@ -753,6 +759,7 @@ extern "C" {
 	NDAPI_API int nd_getMACAddress(INT_PTR pointer, char * mac, int &bufferSize, int deviceId);
 
 	NDAPI_API int nd_getPairedName(INT_PTR pointer, char * name, int &bufferSize, int deviceId);
+	NDAPI_API int nd_calibrateFlexSensors(INT_PTR pointer, int deviceID);
 }
 
 #endif  // __NDAPI_H__ 
