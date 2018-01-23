@@ -29,7 +29,7 @@ namespace NDAPISpace
 {
 
 	/// <summary>To store the rotation values from the IMU of the device</summary>
-	struct quaternion_s{
+	struct quaternion_s {
 		/// <summary>
 		/// X component of the quaternion structure
 		/// </summary>
@@ -50,7 +50,7 @@ namespace NDAPISpace
 	typedef struct quaternion_s quaternion_t;
 
 	/// <summary>To store the acceleration values from the IMU of the device</summary>
-	struct vector3d_s{
+	struct vector3d_s {
 		/// <summary> X component of the vector3d structure</summary>
 		float x;
 		/// <summary> Y component of the vector3d structure</summary>
@@ -61,7 +61,7 @@ namespace NDAPISpace
 	typedef struct vector3d_s vector3d_t;
 
 
-	
+
 
 	/// <summary>Possible errors using methods of the class</summary>
 	enum Error
@@ -80,14 +80,14 @@ namespace NDAPISpace
 		ND_ERROR_INVALID_PARAMETER_ID = -6,
 		/// <summary>Occurs when a invalid value is used</summary>
 		ND_ERROR_INVALID_VALUE = -7,
-		 /// <summary>License is required to use Avatar VR</summary>
-        ND_ERROR_LICENSE_REQUIRED = -8,
-        /// <summary>License can't be checked via Internet</summary>
-        ND_ERROR_LICENSE_CANNOT_CHECK = -9
+		/// <summary>License is required to use Avatar VR</summary>
+		ND_ERROR_LICENSE_REQUIRED = -8,
+		/// <summary>License can't be checked via Internet</summary>
+		ND_ERROR_LICENSE_CANNOT_CHECK = -9
 	};
 
 	/// <summary>Params to get/set of the device</summary>
-	enum DriverParam{
+	enum DriverParam {
 		/// <summary>Firmware current version of the glove</summary>
 		PARAM_FIRMWARE_VERSION = 0,
 		/// <summary>Hardware current revision of the glove</summary>
@@ -203,7 +203,7 @@ namespace NDAPISpace
 		FLEX_PINKY = 4,
 	};
 	/// <summary>Actuators of the device</summary>
-	enum Actuator{
+	enum Actuator {
 		/// <summary>It refers to thumb actuator</summary>
 		ACT_THUMB = 0,
 		/// <summary>It refers to index actuator</summary>
@@ -226,7 +226,7 @@ namespace NDAPISpace
 		ACT_PALM_MIDDLE_UP = 9
 	};
 	/// <summary>Contacts of the device</summary>
-	enum Contact{
+	enum Contact {
 		/// <summary>Only the palm contact is consider</summary>
 		CONT_PALM = 1,
 		/// <summary>Only the thumb contact is consider</summary>
@@ -236,7 +236,7 @@ namespace NDAPISpace
 		/// <summary>Only the middle contact is consider</summary>
 		CONT_MIDDLE = 8,
 		/// <summary>Any contact is consider</summary>
-		CONT_ANY=15	
+		CONT_ANY = 15
 	};
 
 	/// <summary>Connection type from the device to computer</summary>
@@ -258,6 +258,14 @@ namespace NDAPISpace
 		INFO_IMU_FPS = 1
 	};
 
+	enum ProfileParam {
+		/// <summary>Forearm measurement in mm</summary>
+		PARAM_PROFILE_FOREARM = 0,
+		/// <summary>Arm measurement in mm</summary>
+		PARAM_PROFILE_ARM = 1,
+		/// <summary>Shoulder width measurement in mm</summary>
+		PARAM_PROFILE_SHOULDER_WIDTH = 2
+	};
 
 	class NDAPI_Private;
 
@@ -269,7 +277,7 @@ namespace NDAPISpace
 
 		NDAPI();
 		~NDAPI();
-		
+
 		/// <summary>
 		/// Enables or disables the device.
 		/// </summary>
@@ -448,7 +456,7 @@ namespace NDAPISpace
 		/// <param name="deviceId">The device identifier.</param>
 		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
 		int getBatteryLevel(float &value, int deviceId);
-		
+
 		/// <summary>
 		/// Connects to the server that is running inside of the NDAPI service.
 		/// </summary>
@@ -485,7 +493,7 @@ namespace NDAPISpace
 		/// <param name="numIds">The number of devices from a specific filter.</param>
 		/// <returns>>Number of devices from a specific filter if succeeded, otherwise an Error enum.</returns>
 		int getDevicesId(Location filter, int * ids, int numIds);
-		
+
 		/// <summary>
 		/// Gets if the service is searching Devices
 		/// </summary>
@@ -555,7 +563,7 @@ namespace NDAPISpace
 		/// <param name="deviceId">The device identifier</param>
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>
 		int setSensation(float *values, int nValues, int deviceId);
-		
+
 		/// <summary>
 		/// Gets if a virtual device has been used in the last 10 seconds. Use only for ND Suite
 		/// </summary>
@@ -613,7 +621,7 @@ namespace NDAPISpace
 		/// <param name="frameId">An int where the number of frames since the las update will be stored</param>
 		/// <param name="deviceId">The device identifier</param>
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>
-		int getInertialValues(quaternion_t &q, vector3d_t &v, int *gyro, int numValues, int &frameId, int deviceId);		
+		int getInertialValues(quaternion_t &q, vector3d_t &v, int *gyro, int numValues, int &frameId, int deviceId);
 		/// <summary>
 		/// Gets the number of Imus for a spcedific device
 		/// </summary>
@@ -680,9 +688,34 @@ namespace NDAPISpace
 		/// <param name="deviceId">The device identifier</param>
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>	
 		int calibrateFlexSensors(int deviceID);
-
+		/// <summary>
+		/// Gets the profiles in json format
+		/// </summary>		
+		/// <param name="list">List of profiles in jSon format</param>
+		/// <returns>Number of profiles, otherwise an Error enum</returns>	
+		int getProfileList(std::string &list);
+		/// <summary>
+		/// Deletes a profile
+		/// </summary>		
+		/// <param name="name">Name of the profile</param>
+		/// <returns>0 if succeeded, otherwise an Error enum</returns>	
+		int deleteProfile(std::string name);
+		/// <summary>
+		/// Adds or modifies a profile
+		/// </summary>		
+		/// <param name="name">Name of the profile</param>
+		/// <param name="dataJson">Data in Json format</param>
+		/// <returns>0 if succeeded, otherwise an Error enum</returns>
+		int addModifyProfile(std::string name, std::string dataJson);
+		/// <summary>
+		/// Gets the param measurement in mm
+		/// </summary>		
+		/// <param name="name">Name of the profile</param>
+		/// <param name="param">A ProfileParam enum parameter</param>
+		/// <returns>measurement in mm if succeeded, otherwise an Error enum</returns>
+		int getParamProfile(std::string name, NDAPISpace::ProfileParam param);
 	private:
-		
+
 		NDAPI_Private *priv;
 	};
 
@@ -690,7 +723,7 @@ namespace NDAPISpace
 
 extern "C" {
 
-	NDAPI_API INT_PTR nd_init();	
+	NDAPI_API INT_PTR nd_init();
 	NDAPI_API int nd_end(INT_PTR pointer);
 	//NDAPIDriver
 	NDAPI_API int nd_setEnabled(INT_PTR pointer, bool value, int deviceId);
@@ -717,7 +750,7 @@ extern "C" {
 	NDAPI_API int nd_isConnected(INT_PTR pointer, int deviceId);
 	NDAPI_API int nd_getConnectionType(INT_PTR pointer, int deviceId);
 
-	NDAPI_API int nd_getSerialKey(INT_PTR pointer, char * serial,int &bufferSize, int deviceId);
+	NDAPI_API int nd_getSerialKey(INT_PTR pointer, char * serial, int &bufferSize, int deviceId);
 
 
 	NDAPI_API int nd_getBatteryLevel(INT_PTR pointer, float &value, int deviceId);
@@ -729,7 +762,7 @@ extern "C" {
 	NDAPI_API int nd_getNumberOfDevicesFiltered(INT_PTR pointer, NDAPISpace::Location filter);
 	NDAPI_API int nd_getDevicesId(INT_PTR pointer, int *ids, int numIds);
 	NDAPI_API int nd_getDevicesIdFiltered(INT_PTR pointer, NDAPISpace::Location filter, int *ids, int numIds);
-	
+
 
 	NDAPI_API int nd_getDevicesSearchState(INT_PTR pointer);
 	NDAPI_API int nd_setDevicesSearchState(INT_PTR pointer, bool value);
@@ -752,7 +785,7 @@ extern "C" {
 	NDAPI_API int nd_getInertialValuesRaw(INT_PTR pointer, NDAPISpace::_imu_sensor_t *imus, int num, int &frameId, int deviceId);
 	NDAPI_API int nd_getDebugInfo(INT_PTR pointer, NDAPISpace::DebugType type, char *debugInfo, int size, int deviceId);
 	NDAPI_API int nd_getInfo(INT_PTR pointer, NDAPISpace::DriverInfo paramId, float &outValue, int deviceId);
-	
+
 	NDAPI_API float* nd_getSensationValues(INT_PTR pointer, char *path, int &nValues);
 	NDAPI_API int nd_getNumberOfFlex(INT_PTR pointer, int deviceId);
 	NDAPI_API int nd_getFlexState(INT_PTR pointer, float *values, int nValues, int deviceId);
@@ -760,6 +793,10 @@ extern "C" {
 
 	NDAPI_API int nd_getPairedName(INT_PTR pointer, char * name, int &bufferSize, int deviceId);
 	NDAPI_API int nd_calibrateFlexSensors(INT_PTR pointer, int deviceID);
+	NDAPI_API int nd_getProfileList(INT_PTR pointer, char * list, int &bufferSize);
+	NDAPI_API int nd_deleteProfile(INT_PTR pointer, char * name, int size);
+	NDAPI_API int nd_addModifyProfile(INT_PTR pointer, char * name, int sizeName, char * dataJson, int sizeData);
+	NDAPI_API int nd_getParamProfile(INT_PTR pointer, char * name, int sizeName, NDAPISpace::ProfileParam param);
 }
 
 #endif  // __NDAPI_H__ 
