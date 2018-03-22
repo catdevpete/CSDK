@@ -1,15 +1,8 @@
-/******************************************************************************
-* Copyright © NeuroDigital Technologies, S.L. 2015							  *
-* Licensed under the Apache License, Version 2.0 (the "License");			  *
-* you may not use this file except in compliance with the License.			  *
-* You may obtain a copy of the License at 									  *
-* http://www.apache.org/licenses/LICENSE-2.0								  *
-* Unless required by applicable law or agreed to in writing, software		  *
-* distributed under the License is distributed on an "AS IS" BASIS,			  *
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.	  *
-* See the License for the specific language governing permissions and		  *
-* limitations under the License.										      *
-*******************************************************************************/
+/*---------------------------------------------------------------------------
+| SDK																		|
+| @Author: NeuroDigital Technologies, S.L.									|
+| Copyright © NeuroDigital Technologies, S.L. 2012 - 2018           		|
+---------------------------------------------------------------------------*/
 
 #ifndef __NDAPI_H__
 #define __NDAPI_H__
@@ -576,14 +569,20 @@ namespace NDAPISpace
 		/// <param name="path">Full path of the file</param>
 		/// <param name="nValues">Number of values</param>
 		/// <returns>Gets a pointer array with the values or NULL if an error ocurrs</returns>
-		float* getSensationValues(char *path, int &nValues);
+		float* getSensationValues(std::string path, int &nValues);
+		/// <summary>
+		/// Gets num of values from a file representing a sensation. 
+		/// </summary>
+		/// <param name="path">Full path of the file</param>		
+		/// <returns>Number of values</returns>
+		int getNumSensationValues(std::string path);
 		/// <summary>
 		/// Sets a sensation from a file for a specific device 
 		/// </summary>
 		/// <param name="path">Full path of the file</param>
 		/// <param name="deviceId">The device identifier</param>
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>
-		int setSensation(char *path, int deviceId);
+		int setSensation(std::string path, int deviceId);
 
 		//same as before but with a delay of x milliseconds
 		/// <summary>
@@ -602,7 +601,7 @@ namespace NDAPISpace
 		/// <param name="delay">Delay in ms. Maximum </param>
 		/// <param name="deviceId">The device identifier</param>
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>
-		int setSensation(char *path, int delay, int deviceId);
+		int setSensation(std::string path, int delay, int deviceId);
 
 		//imus
 		/// <summary>
@@ -786,7 +785,8 @@ extern "C" {
 	NDAPI_API int nd_getDebugInfo(INT_PTR pointer, NDAPISpace::DebugType type, char *debugInfo, int size, int deviceId);
 	NDAPI_API int nd_getInfo(INT_PTR pointer, NDAPISpace::DriverInfo paramId, float &outValue, int deviceId);
 
-	NDAPI_API float* nd_getSensationValues(INT_PTR pointer, char *path, int &nValues);
+	NDAPI_API int nd_getSensationValues(INT_PTR pointer, float *values, char *path, int numChar);
+	NDAPI_API int nd_getNumValuesSensation(INT_PTR pointer, char *path, int numChar);
 	NDAPI_API int nd_getNumberOfFlex(INT_PTR pointer, int deviceId);
 	NDAPI_API int nd_getFlexState(INT_PTR pointer, float *values, int nValues, int deviceId);
 	NDAPI_API int nd_getMACAddress(INT_PTR pointer, char * mac, int &bufferSize, int deviceId);
