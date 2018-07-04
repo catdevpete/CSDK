@@ -2,4 +2,6 @@
 !*.dll
 !*.lib
 !*.h
-
+!*.exe
+*.vshost.exe
+/Demo_Api_Csharp/Demo_Api_Csharp/obj/*
