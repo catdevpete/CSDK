@@ -1,0 +1,12 @@
+C:\Development\DemosCppCsharp.git\DemoND_C#\Demo_Api_Csharp\Demo_Api_Csharp\bin\x86\Release\Demo_Api_Csharp.exe.config
+C:\Development\DemosCppCsharp.git\DemoND_C#\Demo_Api_Csharp\Demo_Api_Csharp\bin\x86\Release\Demo_Api_Csharp.exe
+C:\Development\DemosCppCsharp.git\DemoND_C#\Demo_Api_Csharp\Demo_Api_Csharp\bin\x86\Release\Demo_Api_Csharp.pdb
+C:\Development\DemosCppCsharp.git\DemoND_C#\Demo_Api_Csharp\Demo_Api_Csharp\obj\x86\Release\Demo_Api_Csharp.exe
+C:\Development\DemosCppCsharp.git\DemoND_C#\Demo_Api_Csharp\Demo_Api_Csharp\obj\x86\Release\Demo_Api_Csharp.pdb
+C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\bin\x86\Release\Demo_Api_Csharp.exe.config
+C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\obj\x86\Release\Demo_Api_Csharp.exe
+C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\obj\x86\Release\Demo_Api_Csharp.pdb
+C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\bin\x86\Release\Demo_Api_Csharp.exe
+C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\bin\x86\Release\Demo_Api_Csharp.pdb
+C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\bin\x86\Release\NDAPIWrapper.dll
+C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\obj\x86\Release\Demo_Api_Csharp.csprojResolveAssemblyReference.cache
