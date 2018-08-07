@@ -76,7 +76,9 @@ namespace NDAPISpace
 		/// <summary>License is required to use Avatar VR</summary>
 		ND_ERROR_LICENSE_REQUIRED = -8,
 		/// <summary>License can't be checked via Internet</summary>
-		ND_ERROR_LICENSE_CANNOT_CHECK = -9
+		ND_ERROR_LICENSE_CANNOT_CHECK = -9,
+		/// <sumary> Function doesn't work anymore
+		ND_ERROR_DEPRECATED = -10
 	};
 
 	/// <summary>Params to get/set of the device</summary>
@@ -157,31 +159,11 @@ namespace NDAPISpace
 		ImuLocation location;
 		/// <summary>Struct to store rotation of the IMU</summary>
 		quaternion_t rawRotation;
-		/// <summary>Struct to store acceleration of the IMU</summary>
-		vector3d_t rawAcceleration;
-		/// <summary>Struct to store angula position of the IMU</summary>
-		vector3d_t rawAngularPosition;
 		/// <summary>It says if there is available rotation</summary>
 		bool hasRotation;
-		/// <summary>It says if there is available acceleration</summary>
-		bool hasAcceleration;
-		/// <summary>In says if there is available angular position</summary>
-		bool hasAngularPosition;
 	};
 	typedef struct imu_sensor_s imu_sensor_t;
 
-	//use just for wrapper purposes
-	struct _imu_sensor_s
-	{
-		int location;
-		quaternion_t rawRotation;
-		vector3d_t rawAcceleration;
-		vector3d_t rawAngularPosition;
-		int hasRotation;
-		int hasAcceleration;
-		int hasAngularPosition;
-	};
-	typedef struct _imu_sensor_s _imu_sensor_t;
 	/// <summary>Flex sensors of the device</summary>
 	enum Flex {
 		/// <summary>It refers to thumb flex</summary>
@@ -250,7 +232,7 @@ namespace NDAPISpace
 		/// <summary>IMU FPS</summary>
 		INFO_IMU_FPS = 1
 	};
-
+	/// <summary>Profiles param types</summary>
 	enum ProfileParam {
 		/// <summary>Forearm measurement in mm</summary>
 		PARAM_PROFILE_FOREARM = 0,
@@ -271,17 +253,7 @@ namespace NDAPISpace
 		NDAPI();
 		~NDAPI();
 
-		/// <summary>
-		/// Enables or disables the device.
-		/// </summary>
-		/// <param name="value">If set to true enables the device, false disables it.</param>
-		/// <param name="deviceId">The device identifier.</param>
-		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
-		int setEnabled(bool value, int deviceId);
-		/// <summary>Determines whether the specified device is enabled</summary>
-		/// <param name="deviceId">The device identifier</param>
-		/// <returns>1 if is enabled, 0 if is disabled or an Error enum</returns>
-		int isEnabled(int deviceId);
+
 		/// <summary>
 		/// Determines if the contacts id1 and id2 are joined.
 		/// </summary>
@@ -366,14 +338,6 @@ namespace NDAPISpace
 		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
 		int getParameter(DriverParam paramId, float &outValue, int deviceId);
 		/// <summary>
-		/// Change the volume of power of a specific actuator.
-		/// </summary>
-		/// <param name="id">An Actuator enum.</param>
-		/// <param name="value">The volume of power between 0.0 and 1.0</param>
-		/// <param name="deviceId">The device identifier.</param>
-		/// <returns>0 if succeeded, otherwise an Error enum</returns>
-		int setActuatorVolume(Actuator id, float value, int deviceId);
-		/// <summary>
 		/// Gets the actuators level of power.
 		/// </summary>
 		/// <param name="values">A pointer to a float array in which the actuators state will be stored.</param>
@@ -395,28 +359,19 @@ namespace NDAPISpace
 		/// <returns>1 if the device has the contact, 0 if not or an Error enum.</returns>
 		int hasContact(Contact id, int deviceId);
 		/// <summary>
-		///  Change the volume of power of all actuators.
-		/// </summary>
-		/// <param name="value">The volume of power between 0.0 and 1.0</param>
-		/// <param name="deviceId">The device identifier.</param>
-		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
-		int setMasterVolume(float value, int deviceId);
-		/// <summary>
 		/// Gets the rotation of the IMU.
 		/// </summary>
 		/// <param name="q">A quaternion where the values of rotation will be stored.</param>
-		/// <param name="frameId">Number of frames since the last update.</param>
 		/// <param name="deviceId">The device identifier.</param>
 		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
-		int getRotation(quaternion_t &q, int &frameId, int deviceId);
+		int getPalmRotation(quaternion_t &q, int deviceId);
 		/// <summary>
 		/// Gets the acceleration of the IMU.
 		/// </summary>
-		/// <param name="v">A vector3d_t where the values of acceleration will be stored.</param>
-		/// <param name="frameId">An int where the number of frames since the las update will be stored.</param>
+		/// <param name="v">A vector3d_t where the values of acceleration will be stored.</param>		>
 		/// <param name="deviceId">The device identifier.</param>
 		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
-		int getAcceleration(vector3d_t &v, int &frameId, int deviceId);
+		int getPalmAcceleration(vector3d_t &v, int deviceId);
 		/// <summary>
 		/// Sets all actuators to a value of power of 0.0
 		/// </summary>
@@ -488,26 +443,9 @@ namespace NDAPISpace
 		int getDevicesId(Location filter, int * ids, int numIds);
 
 		/// <summary>
-		/// Gets if the service is searching Devices
-		/// </summary>
-		/// <returns>1 if is searching, 0 if not or an Error enum</returns>
-		int getDevicesSearchState();
-		/// <summary>
-		/// Enable or disable the device search in the service
-		/// </summary>
-		/// <param name="value">True to enable and False to disable</param>
-		/// <returns>0 if succeeded, otherwise an Error enum</returns>
-		int setDevicesSearchState(bool value);
-		/// <summary>
-		/// Disable the device search in the service and disconnect device in specified port
-		/// </summary>
-		/// <param name="deviceId">Device to disconnect</param>
-		/// <returns>0 if succeeded, otherwise an Error enum</returns>
-		int stopSearchPlusdisconnectDevice(int deviceId);
-		/// <sumary>
 		/// Gets the number of devices paired with the PC. Use only for ND Suite
-		/// </sumary>
-		/// <return>Number of devices paired or an Error enum </return>
+		/// </summary>
+		/// <returns>Number of devices paired or an Error enum </returns>
 		int getNumPaired();
 		/// <summary>
 		/// Gets all the device identifiers paired with the PC. Use only for ND Suite
@@ -558,12 +496,6 @@ namespace NDAPISpace
 		int setSensation(float *values, int nValues, int deviceId);
 
 		/// <summary>
-		/// Gets if a virtual device has been used in the last 10 seconds. Use only for ND Suite
-		/// </summary>
-		/// <param name="deviceId">The device identifier</param>
-		/// <returns>0 if succeeded, otherwise an Error enum</returns>
-		int isActive(int deviceId);
-		/// <summary>
 		/// Gets an array of float values from a file representing a sensation. 
 		/// </summary>
 		/// <param name="path">Full path of the file</param>
@@ -603,24 +535,7 @@ namespace NDAPISpace
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>
 		int setSensation(std::string path, int delay, int deviceId);
 
-		//imus
-		/// <summary>
-		/// Gets the number of Gyros for a spcedific device
-		/// </summary>
-		/// <param name="deviceId">The device identifier</param>
-		/// <returns>Number of Gyros or an Error enum</returns>
-		int getNumberOfGyros(int deviceId);
-		/// <summary>
-		/// Gets inertial values for a specific device
-		/// </summary>
-		/// <param name="q">Where the quaternion data will be stored</param>
-		/// <param name="v">Where the vector3d data will be stored</param>
-		/// <param name="gyro">A pointer array where the gyro values will be stored</param>
-		/// <param name="numValues">Number of values</param>
-		/// <param name="frameId">An int where the number of frames since the las update will be stored</param>
-		/// <param name="deviceId">The device identifier</param>
-		/// <returns>0 if succeeded, otherwise an Error enum</returns>
-		int getInertialValues(quaternion_t &q, vector3d_t &v, int *gyro, int numValues, int &frameId, int deviceId);
+		//imus				
 		/// <summary>
 		/// Gets the number of Imus for a spcedific device
 		/// </summary>
@@ -628,14 +543,13 @@ namespace NDAPISpace
 		/// <returns>Number of Imus or an Error enum</returns>
 		int getNumberOfImus(int deviceId);
 		/// <summary>
-		/// Gets the imus values for a specific device
+		/// Gets the imus rotation values for a specific device
 		/// </summary>
 		/// <param name="imus">A pointer to an array of imu_sensor_t struct</param>
-		/// <param name="num">Number of imus</param>
-		/// <param name="frameId">An int where the number of frames since the las update will be stored</param>
+		/// <param name="num">Number of imus</param>		
 		/// <param name="deviceId">The device identifier</param>
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>
-		int getInertialValues(imu_sensor_t *imus, int num, int &frameId, int deviceId);
+		int getRotations(imu_sensor_t *imus, int num, int deviceId);
 		/// <summary>
 		/// Gets the debug info filtered by DebugType. Use only for ND Suite.
 		/// </summary>
@@ -663,7 +577,7 @@ namespace NDAPISpace
 		/// Gets the flex sensor levels.
 		/// </summary>
 		/// <param name="values">A pointer to a float array in which the flex sensor states will be stored.</param>
-		/// <param name="numValues">The number of flex sensors.</param>
+		/// <param name="nValues">The number of flex sensors.</param>
 		/// <param name="deviceId">The device identifier.</param>
 		/// <returns>0 if succeeded, otherwise an Error enum.</returns>
 		int getFlexState(float *values, int nValues, int deviceId);
@@ -677,7 +591,7 @@ namespace NDAPISpace
 		/// <summary>
 		/// Gets the friendly name from a specific paired device
 		/// </summary>
-		/// <param name="mac">Where the name will be stored.</param>
+		/// <param name="name">Where the name will be stored.</param>
 		/// <param name="deviceId">The device identifier</param>
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>		
 		int getPairedName(std::string &name, int deviceId);
@@ -686,7 +600,7 @@ namespace NDAPISpace
 		/// </summary>		
 		/// <param name="deviceId">The device identifier</param>
 		/// <returns>0 if succeeded, otherwise an Error enum</returns>	
-		int calibrateFlexSensors(int deviceID);
+		int calibrateFlexSensors(int deviceId);
 		/// <summary>
 		/// Gets the profiles in json format
 		/// </summary>		
@@ -724,9 +638,7 @@ extern "C" {
 
 	NDAPI_API INT_PTR nd_init();
 	NDAPI_API int nd_end(INT_PTR pointer);
-	//NDAPIDriver
-	NDAPI_API int nd_setEnabled(INT_PTR pointer, bool value, int deviceId);
-	NDAPI_API int nd_isEnabled(INT_PTR pointer, int deviceId);
+	//NDAPIDriver	
 	NDAPI_API int nd_areContactsJoined(INT_PTR pointer, NDAPISpace::Contact id1, NDAPISpace::Contact id2, int deviceId);
 	NDAPI_API int nd_getContactState(INT_PTR pointer, NDAPISpace::Contact id, int deviceId);
 	NDAPI_API int nd_getContactsState(INT_PTR pointer, int * values, int numValues, int deviceId);
@@ -738,13 +650,11 @@ extern "C" {
 	NDAPI_API int nd_setActuatorPulse(INT_PTR pointer, NDAPISpace::Actuator id, float level, unsigned int duration, int deviceId);
 	NDAPI_API int nd_setParameter(INT_PTR pointer, NDAPISpace::DriverParam paramId, float value, int deviceId);
 	NDAPI_API int nd_getParameter(INT_PTR pointer, NDAPISpace::DriverParam paramId, float &outValue, int deviceId);
-	NDAPI_API int nd_setActuatorVolume(INT_PTR pointer, NDAPISpace::Actuator id, float value, int deviceId);
 	NDAPI_API int nd_getActuatorsState(INT_PTR pointer, float *values, int numValues, int deviceId);
 	NDAPI_API int nd_getDeviceLocation(INT_PTR pointer, int deviceId);
 	NDAPI_API int nd_hasContact(INT_PTR pointer, NDAPISpace::Contact id, int deviceId);
-	NDAPI_API int nd_setMasterVolume(INT_PTR pointer, float value, int deviceId);
-	NDAPI_API int nd_getRotation(INT_PTR pointer, NDAPISpace::quaternion_t &q, int &frameId, int deviceId);
-	NDAPI_API int nd_getAcceleration(INT_PTR pointer, NDAPISpace::vector3d_t &v, int &frameId, int deviceId);
+	NDAPI_API int nd_getPalmRotation(INT_PTR pointer, NDAPISpace::quaternion_t &q, int deviceId);
+	NDAPI_API int nd_getPalmAcceleration(INT_PTR pointer, NDAPISpace::vector3d_t &v, int deviceId);
 	NDAPI_API int nd_setActuatorsStop(INT_PTR pointer, int deviceId);
 	NDAPI_API int nd_isConnected(INT_PTR pointer, int deviceId);
 	NDAPI_API int nd_getConnectionType(INT_PTR pointer, int deviceId);
@@ -762,11 +672,6 @@ extern "C" {
 	NDAPI_API int nd_getDevicesId(INT_PTR pointer, int *ids, int numIds);
 	NDAPI_API int nd_getDevicesIdFiltered(INT_PTR pointer, NDAPISpace::Location filter, int *ids, int numIds);
 
-
-	NDAPI_API int nd_getDevicesSearchState(INT_PTR pointer);
-	NDAPI_API int nd_setDevicesSearchState(INT_PTR pointer, bool value);
-	NDAPI_API int nd_stopSearchPlusdisconnectDevice(INT_PTR pointer, int deviceId);
-
 	NDAPI_API int nd_getNumPaired(INT_PTR pointer);
 	NDAPI_API int nd_getPaired(INT_PTR pointer, int numPorts, int *ports);
 	NDAPI_API int nd_getPairedMac(INT_PTR pointer, char * mac, int &bufferSize, int deviceId);
@@ -776,12 +681,8 @@ extern "C" {
 	NDAPI_API int nd_setContactsState(INT_PTR pointer, int *values, int nValues, int deviceId);
 	//function
 	NDAPI_API int nd_setSensation(INT_PTR pointer, float *values, int nValues, int delay, int deviceId);
-	NDAPI_API int nd_isActive(INT_PTR pointer, int deviceId);
-
-	NDAPI_API int nd_getNumberOfGyros(INT_PTR pointer, int deviceId);
-	NDAPI_API int nd_getInertialValues(INT_PTR pointer, NDAPISpace::quaternion_t &q, NDAPISpace::vector3d_t &v, int *gyro, int numValues, int &frameId, int deviceId);
 	NDAPI_API int nd_getNumberOfImus(INT_PTR pointer, int deviceId);
-	NDAPI_API int nd_getInertialValuesRaw(INT_PTR pointer, NDAPISpace::_imu_sensor_t *imus, int num, int &frameId, int deviceId);
+	NDAPI_API int nd_getRotations(INT_PTR pointer, NDAPISpace::imu_sensor_t *imus, int num, int deviceId);
 	NDAPI_API int nd_getDebugInfo(INT_PTR pointer, NDAPISpace::DebugType type, char *debugInfo, int size, int deviceId);
 	NDAPI_API int nd_getInfo(INT_PTR pointer, NDAPISpace::DriverInfo paramId, float &outValue, int deviceId);
 
@@ -792,7 +693,7 @@ extern "C" {
 	NDAPI_API int nd_getMACAddress(INT_PTR pointer, char * mac, int &bufferSize, int deviceId);
 
 	NDAPI_API int nd_getPairedName(INT_PTR pointer, char * name, int &bufferSize, int deviceId);
-	NDAPI_API int nd_calibrateFlexSensors(INT_PTR pointer, int deviceID);
+	NDAPI_API int nd_calibrateFlexSensors(INT_PTR pointer, int deviceId);
 	NDAPI_API int nd_getProfileList(INT_PTR pointer, char * list, int &bufferSize);
 	NDAPI_API int nd_deleteProfile(INT_PTR pointer, char * name, int size);
 	NDAPI_API int nd_addModifyProfile(INT_PTR pointer, char * name, int sizeName, char * dataJson, int sizeData);

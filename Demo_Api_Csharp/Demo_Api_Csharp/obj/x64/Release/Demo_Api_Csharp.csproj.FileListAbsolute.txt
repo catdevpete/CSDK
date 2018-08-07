@@ -1,7 +1,0 @@
-C:\Development\DemosCppCsharp.git\DemoND_C#\Demo_Api_Csharp\Demo_Api_Csharp\bin\x64\Release\Demo_Api_Csharp.exe.config
-C:\Development\DemosCppCsharp.git\DemoND_C#\Demo_Api_Csharp\Demo_Api_Csharp\bin\x64\Release\Demo_Api_Csharp.exe
-C:\Development\DemosCppCsharp.git\DemoND_C#\Demo_Api_Csharp\Demo_Api_Csharp\obj\x64\Release\Demo_Api_Csharp.exe
-C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\bin\x64\Release\Demo_Api_Csharp.exe.config
-C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\obj\x64\Release\Demo_Api_Csharp.exe
-C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\bin\x64\Release\Demo_Api_Csharp.exe
-C:\Development\CSDK.git\Demo_Api_Csharp\Demo_Api_Csharp\bin\x64\Release\NDAPIWrapper.dll

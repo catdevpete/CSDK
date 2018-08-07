@@ -5,3 +5,7 @@
 !*.exe
 *.vshost.exe
 /Demo_Api_Csharp/Demo_Api_Csharp/obj/*
+*.tlog
+*.opensdf
+*.iobj
+*.ipdb
